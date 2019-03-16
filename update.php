@@ -29,11 +29,13 @@
 		$nameError = null;
 		$emailError = null;
 		$mobileError = null;
+                $passwordhashError = null;
 		
 		// keep track post values
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$mobile = $_POST['mobile'];
+                $passwordhash = $_POST['passwordhash'];
 		
 		// validate input
 		$valid = true;
@@ -54,14 +56,19 @@
 			$mobileError = 'Please enter Mobile Number';
 			$valid = false;
 		}
+                
+                if (empty($passwordhash)) {
+			$passwordhashError = 'Please enter Password';
+			$valid = false;
+		}
 		
 		// update data
 		if ($valid) {
 			$pdo = Database::connect();
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "UPDATE customer  set name = ?, email = ?, mobile =? WHERE id = ?";
+			$sql = "UPDATE customer  set name = ?, email = ?, mobile =?, passwordhash =? WHERE id = ?";
 			$q = $pdo->prepare($sql);
-			$q->execute(array($name,$email,$mobile,$id));
+			$q->execute(array($name,$email,$mobile,$passwordhash,$id));
 			Database::disconnect();
 			header("Location: index.php");
 		}
@@ -75,6 +82,7 @@
 		$name = $data['name'];
 		$email = $data['email'];
 		$mobile = $data['mobile'];
+                $passwordhash = $data['passwordhash'];
 		Database::disconnect();
 	}
 ?>
@@ -121,6 +129,15 @@
 					      	<input name="mobile" type="text"  placeholder="Mobile Number" value="<?php echo !empty($mobile)?$mobile:'';?>">
 					      	<?php if (!empty($mobileError)): ?>
 					      		<span class="help-inline"><?php echo $mobileError;?></span>
+					      	<?php endif;?>
+					    </div>
+					  </div>
+                                          <div class="control-group <?php echo !empty($passwordhashError)?'error':'';?>">
+					    <label class="control-label">Password</label>
+					    <div class="controls">
+					      	<input name="passwordhash" type="text"  placeholder="Password" value="<?php echo !empty($passwordhash)?$passwordhash:'';?>">
+					      	<?php if (!empty($passwordhashError)): ?>
+					      		<span class="help-inline"><?php echo $passwordhashError;?></span>
 					      	<?php endif;?>
 					    </div>
 					  </div>
