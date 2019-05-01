@@ -3,7 +3,7 @@
     /* ---------------------------------------------------------------------------
     * filename    : delete.php
     * author      : Spencer Huebler-Davis, shuebler@svsu.edu
-    * description : This program deletes a customer (table: customer)
+    * description : This program deletes an agent (table: users)
     * ---------------------------------------------------------------------------
     */
 
@@ -13,7 +13,7 @@
     }
     
     // include the class that handles database connections
-    require '../database.php';
+    require '../database2.php';
     
 	$id = 0;
 	
@@ -28,7 +28,7 @@
 		// delete data
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM customer WHERE id = ?";
+		$sql = "DELETE FROM users WHERE id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		Database::disconnect();
@@ -49,13 +49,16 @@
     <div class="container">
     
     			<div class="span10 offset1">
+    			    <p>
+                        <img src="Pletona.png" alt="Logo" style="width:360px;height:150px;">
+                    </p>
     				<div class="row">
-		    			<h3>Delete a Customer</h3>
+		    			<h3>Delete an Agent</h3>
 		    		</div>
 		    		
 	    			<form class="form-horizontal" action="delete.php" method="post">
 	    			  <input type="hidden" name="id" value="<?php echo $id;?>"/>
-					  <p class="alert alert-error">Are you sure to delete ?</p>
+					  <p class="alert alert-error">Are you sure you want to delete this entry?</p>
 					  <div class="form-actions">
 						  <button type="submit" class="btn btn-danger">Yes</button>
 						  <a class="btn" href="index.php">No</a>

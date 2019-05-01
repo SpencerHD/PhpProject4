@@ -3,7 +3,7 @@
 /* ---------------------------------------------------------------------------
 * filename    : logout.php
 * author      : Spencer Huebler-Davis, shuebler@svsu.edu
-* description : This program logs out a customer
+* description : This program logs out a user
 * ---------------------------------------------------------------------------
 */
 

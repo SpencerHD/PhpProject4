@@ -1,9 +1,9 @@
 <?php 
 
     /* ---------------------------------------------------------------------------
-    * filename    : read.php
+    * filename    : display.php
     * author      : Spencer Huebler-Davis, shuebler@svsu.edu
-    * description : This program reads a customer's entry (table: customer)
+    * description : This program reads an agent's entry (table: user)
     * ---------------------------------------------------------------------------
     */
 
@@ -13,7 +13,7 @@
     }
 
     // include the class that handles database connections
-    require '../database.php';
+    require '../database2.php';
     
 	$id = null;
 	if ( !empty($_GET['id'])) {
@@ -25,7 +25,7 @@
 	} else {
 		$pdo = Database::connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * FROM customer where id = ?";
+		$sql = "SELECT * FROM users where id = ?";
 		$q = $pdo->prepare($sql);
 		$q->execute(array($id));
 		$data = $q->fetch(PDO::FETCH_ASSOC);
@@ -45,8 +45,11 @@
     <div class="container">
     
     			<div class="span10 offset1">
+    			    <p>
+                        <img src="Pletona.png" alt="Logo" style="width:360px;height:150px;">
+                    </p>
     				<div class="row">
-		    			<h3>Read a Customer</h3>
+		    			<h3>Displaying Agent</h3>
 		    		</div>
 		    		
 	    			<div class="form-horizontal" >
@@ -59,18 +62,26 @@
 					    </div>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Email Address</label>
+					    <label class="control-label">Codename</label>
 					    <div class="controls">
-					      	<label class="checkbox">
-						     	<?php echo $data['email'];?>
+						    <label class="checkbox">
+						     	<?php echo $data['codename'];?>
 						    </label>
 					    </div>
 					  </div>
 					  <div class="control-group">
-					    <label class="control-label">Mobile Number</label>
+					    <label class="control-label">Assignment</label>
 					    <div class="controls">
 					      	<label class="checkbox">
-						     	<?php echo $data['mobile'];?>
+						     	<?php echo $data['assignment'];?>
+						    </label>
+					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label">Location</label>
+					    <div class="controls">
+					      	<label class="checkbox">
+						     	<?php echo $data['location'];?>
 						    </label>
 					    </div>
 					  </div>
@@ -78,7 +89,7 @@
 					    <label class="control-label">Password</label>
 					    <div class="controls">
 					      	<label class="checkbox">
-						     	<?php echo $data['passwordhash'];?>
+						     	<?php echo $data['password'];?>
 						    </label>
 					    </div>
 					  </div>

@@ -1,16 +1,11 @@
 <?php 
 
     /* ---------------------------------------------------------------------------
-    * filename    : create.php
+    * filename    : join.php
     * author      : Spencer Huebler-Davis, shuebler@svsu.edu
-    * description : This program creates a new agent (table: users)
+    * description : This program joins a new agent (table: users)
     * ---------------------------------------------------------------------------
     */
-
-    session_start();
-    if (!$_SESSION) {
-    header("Location: login.php");
-    }
 
     // include the class that handles database connections
     require '../database2.php';
@@ -38,7 +33,7 @@
 			$codenameError = 'Please enter Codename';
 			$valid = false;
 		}
-		
+                
         if (empty($password)) {
 			$passwordError = 'Please enter Password';
 			$valid = false;
@@ -52,7 +47,7 @@
 			$q = $pdo->prepare($sql);
 			$q->execute(array($name,$codename,$password));
 			Database::disconnect();
-			header("Location: index.php");
+			header("Location: login.php");
 		}
 	}
 ?>
@@ -74,10 +69,10 @@
                         <img src="Pletona.png" alt="Logo" style="width:360px;height:150px;">
                     </p>
     				<div class="row">
-		    			<h3>Create a New Agent</h3>
+		    			<h3>Join a New Agent</h3>
 		    		</div>
     		
-	    			<form class="form-horizontal" action="create.php" method="post">
+	    			<form class="form-horizontal" action="join.php" method="post">
 					  <div class="control-group <?php echo !empty($nameError)?'error':'';?>">
 					    <label class="control-label">Name</label>
 					    <div class="controls">
@@ -106,10 +101,10 @@
 					    </div>
 					  </div>
 					  <div class="form-actions">
-                                                  <form action="index.php">
-                                                        <input type="submit" class="btn btn-success" value="Create"/>
-                                                  </form>
-						  <a class="btn" href="index.php">Back</a>
+                      <form action="login.php">
+                            <input type="submit" class="btn btn-success" value="Join"/>
+                      </form>
+						  <a class="btn" href="login.php">Back</a>
 						</div>
 					</form>
 				</div>

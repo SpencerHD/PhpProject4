@@ -4,7 +4,7 @@
 * filename    : index.php
 * author      : Spencer Huebler-Davis, shuebler@svsu.edu
 * description : This program displays the list for the
-*               database (table: customer)
+*               database (table: users)
 * ---------------------------------------------------------------------------
 */
 
@@ -26,9 +26,12 @@ header("Location: login.php");
     <div class="container">
     		<div class="row">
                     <p>
-			<a href="https://github.com/SpencerHD/PhpProject4">Github Repo</a>
+			            <a href="https://github.com/SpencerHD/PhpProject4">Github Repo</a>
                     </p>
-    			<h3>Customers</h3></h3>
+                    <p>
+                        <img src="Pletona.png" alt="Logo" style="width:360px;height:150px;">
+                    </p>
+    			<h3>All Active Agents</h3></h3>
     		</div>
 			<div class="row">
 				<p>
@@ -40,29 +43,37 @@ header("Location: login.php");
 		              <thead>
 		                <tr>
 		                  <th>Name</th>
-		                  <th>Email Address</th>
-		                  <th>Mobile Number</th>
+		                  <th>Codename</th>
+		                  <th>Assignment</th>
+		                  <th>Location</th>
 		                  <th>Action</th>
 		                </tr>
 		              </thead>
 		              <tbody>
 		              <?php
-                                            require '../database.php';
+                                            require '../database2.php';
                                             $pdo = Database::connect();
-                                            $sql = 'SELECT * FROM customer ORDER BY id DESC';
-                                            foreach ($pdo->query($sql) as $row) {
-                                                                 echo '<tr>';
-                                                                 echo '<td>'. $row['name'] . '</td>';
-                                                                 echo '<td>'. $row['email'] . '</td>';
-                                                                 echo '<td>'. $row['mobile'] . '</td>';
-                                                                 echo '<td width=250>';
-                                                                 echo '<a class="btn" href="read.php?id='.$row['id'].'">Read</a>';
-                                                                 echo '&nbsp;';
-                                                                 echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Update</a>';
-                                                                 echo '&nbsp;';
-                                                                 echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Delete</a>';
-                                                                 echo '</td>';
-                                                                 echo '</tr>';
+                                            $sql = 'SELECT * FROM users ORDER BY id DESC';
+                                            if(is_array($pdo->query($sql)) || is_object($pdo->query($sql))){
+                                                foreach ($pdo->query($sql) as $row) {
+                                                                     echo '<tr>';
+                                                                     echo '<td>'. $row['name'] . '</td>';
+                                                                     echo '<td>'. $row['codename'] . '</td>';
+                                                                     echo '<td>'. $row['assignment'] . '</td>';
+                                                                     echo '<td>'. $row['location'] . '</td>';
+                                                                     echo '<td width=300>';
+                                                                     echo '<a class="btn" href="display.php?id='.$row['id'].'">Display</a>';
+                                                                     echo '&nbsp;';
+                                                                     echo '<a class="btn btn-success" href="assign.php?id='.$row['id'].'">Assign</a>';
+                                                                     echo '&nbsp;';                     
+                                                                     echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Delete</a>';
+                                                                     echo '&nbsp;';
+                                                                     echo '<a class="btn" href="change.php?id='.$row['id'].'">Change Codename</a>';
+                                                                     echo '&nbsp;';
+                                                                     echo '<a class="btn" href="password.php?id='.$row['id'].'">Change Password</a>';
+                                                                     echo '</td>';
+                                                                     echo '</tr>';
+                                                }
                                             }
                                             Database::disconnect();
                                             ?>
@@ -71,8 +82,7 @@ header("Location: login.php");
         
     	</div>
     <!-- links to diagrams -->
-    <a href='../CustomerUML.png' target='_blank'>UML Diagram</a><br />
-    <a href='../screenflowdiagram.png' target='_blank'>Screen Flow Chart</a><br />
+    <a href='agent_flowchart.png' target='_blank'>Screen Flow Chart</a><br />
     </div> <!-- /container -->
   </body>
 </html>

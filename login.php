@@ -10,7 +10,7 @@
 session_start();
 
 // include the class that handles database connections
-require_once '../database.php';
+require_once '../database2.php';
 
 // create error messages for invalid credentials
 if($_GET) $errorMessage = $_GET['errorMessage'];
@@ -25,7 +25,7 @@ if($_POST) {
     // grab data from customer database
     $pdo = Database::connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT * FROM customer WHERE email = '$username' AND passwordhash = '$password' LIMIT 1";
+    $sql = "SELECT * FROM users WHERE codename = '$username' AND password = '$password' LIMIT 1";
     $q = $pdo->prepare($sql);
     $q->execute(array());
     $data = $q->fetch(PDO::FETCH_ASSOC);
@@ -42,17 +42,21 @@ if($_POST) {
 }
 // else just show empty login form
 ?>
-<h1>Log In</h1>
+<img src="Pletona.png" alt="Logo" style="width:480px;height:200px;">
+<h1>Log Into Agent List</h1>
 
 <form class="form-horizontal" action="login.php" method="post">
     
-    <input name="username" type="text" placeholder="me@email.com" required>
+    <p>Agent Name</p>
+    <input name="username" type="text" required>
+    <p>Password</p>
     <input name="password" type="password" required>
     <button type="submit" class="btn btn-success">Sign In</button>
     
 </form>
 
-<form action="create2.php">
+<form action="join.php">
+    <p>Join Agent</p>
     <input type="submit" class="btn btn-success" value="Join"/>
 </form>
 
